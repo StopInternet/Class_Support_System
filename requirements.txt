@@ -1,0 +1,4 @@
+django
+django-allauth
+django-bootstrap5
+psycopg2-binary
