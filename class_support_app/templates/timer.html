@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%}タイマーページ{% endblock %}
+{% block body %}
+
+<div class="hamburger-menu">
+  <input type="checkbox" id="menu-btn-check">
+  <label for="menu-btn-check" class="menu-btn"><span></span></label>
+  <!--ここからメニュー-->
+  <div class="menu-content">
+      <ul>
+        <li>
+          <a href="#">説明</a>
+        </li>
+          <li>
+              <a href="{% url 'class_support_app:timer_kentei'%}">電卓検定計測</a>
+          </li>
+          <li>
+              <a href="{% url 'class_support_app:timer_aocc'%}">AOCC計測</a>
+          </li>
+      </ul>
+  </div>
+  <!--ここまでメニュー-->
+</div>
+<div align="center" id="timera">
+  <h1>計測タイマー</h1><br>
+
+  <canvas id="canvas" width="800" height="400" style="background-color: #8f9fc;">
+    </canvas><br>
+開始<input type="text" id="min" value="0" maxlength="3">分  <input type="text" id="sec" value="0" maxlength="2">秒 <br>
+残り<input type="text" id="min_1" value="0" maxlength="3">分 <input type="text" id="sec_1" value="0" maxlength="2">秒<br>
+残り<input type="text" id="min_2" value="0" maxlength="3">分 <input type="text" id="sec_2" value="0" maxlength="2">秒<br>
+残り<input type="text" id="min_3" value="0" maxlength="3">分 <input type="text" id="sec_3" value="0" maxlength="2">秒
+<br><br>
+
+<input type="button" id="button" value="計測開始" onclick="setTime()">
+<input type="button" id="button" value="停止" onclick="stop()"><br><br>
+
+<script src="{% static 'js/main_timer.js'%}">
+{% endblock %}
