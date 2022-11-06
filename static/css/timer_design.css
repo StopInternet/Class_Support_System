@@ -1,0 +1,17 @@
+.openbox input {
+    display: none; /* チェックボックスを隠す */
+    }
+    .openbox .boxshow {
+    height: 0;
+    opacity: 0; /* 折り畳んだ時に中を透明にする */
+    display: none;/* 閉じた時に中身の要素をなくす */
+    }
+    .inputcss:checked + .boxshow {
+    height: auto;
+    opacity: 1; /*クリックやタップで中を表示させる*/
+    display: block;/* 折り畳みになるように */
+    }
+    .openbox label {
+    background: #babbbb;
+    padding: 5px 10px;
+    }
