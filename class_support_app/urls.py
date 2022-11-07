@@ -6,5 +6,9 @@ urlpatterns = [
     path('',views.IndexView.as_view(),name="index"),
     path('timer',views.TimerMainView.as_view(),name="timer"),
     path('timer_kentei',views.TimerDentakuView.as_view(),name="timer_kentei"),
-    path('timer_aocc',views.TimerAoccView.as_view(),name="timer_aocc")
+    path('timer_aocc_kagen',views.TimerAocckagenView.as_view(),name="timer_aocc_kagen"),
+    path('timer_aocc_zyouzyo',views.TimerAocczyouzyoView.as_view(),name="timer_aocc_zyouzyo"),
+    path('timer_aocc_mitori',views.TimerAoccmitoriView.as_view(),name="timer_aocc_mitori"),
+    path('timer_aocc_denpyou',views.TimerAoccdenpyouView.as_view(),name="timer_aocc_denpyou"),
+    path('sekigae',views.SekigaeView.as_view(),name="sekigae")
 ]

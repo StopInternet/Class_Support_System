@@ -9,5 +9,17 @@ class TimerMainView(generic.TemplateView):
 class TimerDentakuView(generic.TemplateView):
     template_name = "timer_kentei.html"
 
-class TimerAoccView(generic.TemplateView):
-    template_name = "timer_aocc.html"
+class TimerAocckagenView(generic.TemplateView):
+    template_name = "timer_aocc_kagen.html"
+
+class TimerAocczyouzyoView(generic.TemplateView):
+    template_name = "timer_aocc_zyouzyo.html"
+
+class TimerAoccmitoriView(generic.TemplateView):
+    template_name = "timer_aocc_mitori.html"
+
+class TimerAoccdenpyouView(generic.TemplateView):
+    template_name = "timer_aocc_denpyou.html"
+
+class SekigaeView(generic.TemplateView):
+    template_name = "sekigae.html"

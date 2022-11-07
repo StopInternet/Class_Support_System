@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} メイン {% endblock %}
+{% block body %} 
+<h1>簡単！席替え</h1>
+
+<div>
+縦の列<input type="integrity" id="tate" value="0" maxlength="3"><br>
+横の列<input type="integrity" id="yoko" value="0" maxlength="2"><br>
+<input type="button" id="button" value="生成" onclick="MasGene()">
+</div>
+<div id="two-way-binding">
+  <p> [[ message ]]</p><br>
+  <input v-model=" message" />
+  <div>
+<script src="{% static 'js/sekigae.js'%}"></script>
+{% endblock %}

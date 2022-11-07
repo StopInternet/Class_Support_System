@@ -2,8 +2,7 @@
 {% load static %}
 {% block title %} 授業支援サイト{% endblock %}
 {% block subtitle%} メイン {% endblock %}
-{% block body %}
-
+{% block body %} 
 <div class="openbox">
   <label for="pushlabel">▼ テンプレート設定</label>
   <input id="pushlabel" class="inputcss" type="checkbox" />
@@ -20,13 +19,13 @@
   </div>
 
 <div align="center" id="timera">
-  <h1>電卓検定計測</h1><br>
-
+  <h1>AOCC計測</h1><br>
+  <h2>乗除算計測</h2>
   <canvas id="canvas" width="800" height="400" style="background-color: #8f9fc;">
     </canvas><br>
     <br>
 
-<input type="button" id="button" value="計測開始" onclick="setTime()">
-<input type="button" id="button" value="停止" onclick="stop()"><br><br>
-<script src="{% static 'js/timer/dentaku_timer.js'%}">
+  <input type="button" id="button" value="計測開始" onclick="setTime()">
+  <input type="button" id="button" value="停止" onclick="stop()"><br><br>
+<script src="{% static 'js/aocc/aocc_timer_zyouzyo.js'%}">
 {% endblock %}
