@@ -53,6 +53,9 @@ function setTime(){
     alert("計測時間を設定してください。");
     location.onload();
   }
+  if(finish_time >= 60000){
+    finish_time = 60000;
+  }
   count_time.push(sumSec("min_1", "sec_1"));
   count_time.push(sumSec("min_2", "sec_2"));
   count_time.push(sumSec("min_3", "sec_3"));
