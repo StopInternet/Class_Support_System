@@ -24,7 +24,9 @@
 
   <canvas id="canvas" width="800" height="400" style="background-color: #8f9fc;">
     </canvas><br>
-開始<input type="text" id="min" value="0" maxlength="3">分  <input type="text" id="sec" value="0" maxlength="2">秒 <br>
+<h3>時間設定</h3>
+開始<input type="text"  id="min" value="0" maxlength="3">分  <input type="text" id="sec" value="0" maxlength="2">秒 <br>
+<h3>アラート設定</h3>
 残り<input type="text" id="min_1" value="0" maxlength="3">分 <input type="text" id="sec_1" value="0" maxlength="2">秒<br>
 残り<input type="text" id="min_2" value="0" maxlength="3">分 <input type="text" id="sec_2" value="0" maxlength="2">秒<br>
 残り<input type="text" id="min_3" value="0" maxlength="3">分 <input type="text" id="sec_3" value="0" maxlength="2">秒
@@ -33,5 +35,17 @@
 <input type="button" id="button" value="計測開始" onclick="setTime()">
 <input type="button" id="button" value="停止" onclick="stop()"><br><br>
 
+<h1>説明</h1>
+<div id="descri">
+  <h4>
+  1. 
+  時間設定は、計測を行いたい時間を設定できます。<br>
+  最大999分60秒まで計測が可能です<br>
+  2. 
+  アラート設定は、途中経過の合図を出したいときに<br>
+  設定を行ってください。<br>
+  最大3つまで設定できます<br>
+  </h4>
+</div>
 <script src="{% static 'js/timer/main_timer.js'%}">
 {% endblock %}

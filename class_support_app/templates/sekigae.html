@@ -4,15 +4,16 @@
 {% block subtitle%} メイン {% endblock %}
 {% block body %} 
 <h1>簡単！席替え</h1>
+縦の列<input type="text" id="tate" value="1" maxlength="2"><br>
+横の列<input type="text" id="yoko" value="1" maxlength="2"><br>
+<input type="button" id="button" value="名前を入力" onclick="MasGene()">
 
-<div>
-縦の列<input type="integrity" id="tate" value="0" maxlength="3"><br>
-横の列<input type="integrity" id="yoko" value="0" maxlength="2"><br>
-<input type="button" id="button" value="生成" onclick="MasGene()">
+<!--テーブルの生成-->
+<div id="sekigae">
+
 </div>
-<div id="two-way-binding">
-  <p> [[ message ]]</p><br>
-  <input v-model=" message" />
-  <div>
+<table>
+
+</table>
 <script src="{% static 'js/sekigae.js'%}"></script>
 {% endblock %}
