@@ -2,18 +2,19 @@
 {% load static %}
 {% block title %} 授業支援サイト{% endblock %}
 {% block subtitle%} メイン {% endblock %}
-{% block body %} 
+{% block body %}
+
 <h1>簡単！席替え</h1>
-縦の列<input type="text" id="tate" value="1" maxlength="2"><br>
-横の列<input type="text" id="yoko" value="1" maxlength="2"><br>
-<input type="button" id="button" value="名前を入力" onclick="MasGene()">
-
-<!--テーブルの生成-->
 <div id="sekigae">
-
+  縦の列<input type="text" id="tate" value="1" maxlength="2"><br>
+  横の列<input type="text" id="yoko" value="1" maxlength="2"><br>
+  <input type="button" id="button" value="席を作る" onclick="MasGene()">
+  <input type="button" id="names" value="シャッフル" onclick="Shuffle()">
 </div>
-<table>
 
-</table>
+<div id="seki_list">
+  <input type="text" id="seki" maxlength="16">
+</div>
+
 <script src="{% static 'js/sekigae.js'%}"></script>
 {% endblock %}
