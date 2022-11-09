@@ -1,51 +1,40 @@
 //定義
-var classMem = 0;
-const div = document.createElement('div');
-const sizes = document.getElement('sizes');
-const sekidiv = document.getElementById("sekigae");
+var clicked;
 
-//連想配列
-var name={
-}
-function addInput(counts){
-    
-    if(!sekidiv.hasChildNodes()){
-        const sek = document.createElement("div");
-        sek.setAttribute("class",counts);
-        sekidiv.appendChild(sek);
+class sekigae_app{
+    constructor(name) {
+        this.name = name;
+    }
+    static getNames(){
+        return this.name;
     }
 }
-
 function MasGene(){
-    const tate = document.getElementById("tate").value;
-    const yoko = document.getElementById("yoko").value;
+    if(clicked!=true){
+    //一度のみの入力を許可。
+    //縦と横の取得
+    tate = document.getElementById("tate").value;
+    yoko = document.getElementById("yoko").value;
     classMem = tate*yoko;
-
-    count = prompt("何名分を入力しますか？");
-    for(var i=1;i<=count;i++){
-        name = 
-    }
-    let table = document.createElement('table');
-    let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
-    table.appendChild(thead);
-    table.appendChild(tbody);
-    //divに登録
-    document.getElementById('lists').appendChild(table);
-    //生成(最上位)
-    let song_name = document.createElement('tr');
-    let heading_1 = document.createElement('th');
-    heading_1.innerHTML = "譜面一覧";
-    song_name.appendChild(heading_1);
-    thead.appendChild(song_name);
-
     
-    //二段目以降
-    for(var i = 1; i <= Object.keys(songs).length;i++){
-    let namei = document.createElement('tr');
-    let i_data = document.createElement('td');
-    i_data.innerHTML = i+" : "+songs[i];
-    namei.appendChild(i_data);
-    tbody.appendChild(namei);
+    //配列の生成、席を生成。
+    inputs_seki = new Array(classMem);
+    for(var i=0;i<classMem;i++){
+        //idとclassを振り分けたinput情報を配列に入力
+        inputs_seki.push(
+    '<input type="text" id="seki_'+i+'" class ="sekis_'+i+'"maxlength="16" value="null">');
     }
+    //joinで一括展開
+    document.getElementById("seki_list").innerHTML = inputs_seki.join('');
+    clicked = true;
+}
+}
+
+function Shuffle(){
+    names_list = new Array(classMem);
+    for(var i=0;i<classMem;i++){
+        //names_list.push(document.getElementById("seki_"+i).value);
+        const i = new sekigae_app(document.getElementById("seki_"+i).value);
+    }
+    c1.getNames();
 }
