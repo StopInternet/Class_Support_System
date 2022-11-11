@@ -1,0 +1,58 @@
+.sekigae{
+  width: 250px;
+  height: 300px;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.seki_apps{
+  width: 800px;
+  height: 300px;
+  text-align: center;
+  margin: auto;
+}
+
+.seki_art{
+  display: flex;
+}
+
+#seki_model{
+  border-collapse:collapse;
+  border: 1px solid #000000;
+  border-spacing: 30px;
+  border-radius: 10px;
+  padding: 5px;
+  margin:auto;
+
+}
+
+#seki_out{
+  border-collapse:collapse;
+  border: 1px solid #000000;
+  border-spacing: 30px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: auto;
+}
+
+#sekiTM{
+  border-collapse:collapse;
+  border: 1px solid #000000;
+  border-spacing: 30px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: auto;
+}
+
+#sekiTO{
+  border-collapse:separate;
+  border-spacing: 30px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: auto;
+}
+
+td #seki_body{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
