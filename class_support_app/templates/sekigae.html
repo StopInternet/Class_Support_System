@@ -5,20 +5,43 @@
 {% block body %}
 
 <h1>簡単！席替え</h1>
-<div id="sekigae">
-  縦の列<input type="text" id="tate" value="1" maxlength="2"><br>
-  横の列<input type="text" id="yoko" value="1" maxlength="2"><br>
+<article class="seki_art">
+<div class="sekigae">
+  縦の列 最大:99 <input type="text" id="tate" value="1" maxlength="2"><br>
+  横の列 最大:9  <input type="text" id="yoko" value="1" maxlength="1"><br>
   名前を入力する<br>
   <input type="button" id="button" value="席を作る" onclick="MasGene()">
   <input type="button" id="names" value="シャッフル" onclick="Shuffle()">
-</div>
-<div id="seki_apps">
+  <br>
+  <br>
+
+    <input type="text" id="search-text" placeholder="検索番号を入力",value="">
+    <input type="button" id="names_seach" value="検索" onclick="search()">
+  <div id="search_result">
+  </div>
+  <br>
+  <br>
+  <div id="seki_dec">
+  </div>
+  
 <div id="seki_list">
 </div>
-<div id="seki_model">
 </div>
-<div id="seki_out">
+
+<div class="seki_apps">
+  <h1>座席モデル</h1>
+  <div class="seki_tables">
+    <div id="seki_model" >
+      <!--席のモデル用-->
+      縦と横の列を決めて「席を作る」を<br>
+      クリックすると席一覧のモデルが生成されます
+    </div>
+    <div id="seki_out">
+      <!--席替え後の出力用-->
+    </div>
+    <div><!--席テーブルここまで-->
+    
 </div>
-</div>
+</article>
 <script src="{% static 'js/sekigae.js'%}"></script>
 {% endblock %}
