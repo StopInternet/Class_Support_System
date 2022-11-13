@@ -1,5 +1,5 @@
 .sekigae{
-  width: 250px;
+  width: 300px;
   height: 300px;
   text-align: left;
   margin-left: 10px;
@@ -14,6 +14,7 @@
 
 .seki_art{
   display: flex;
+
 }
 
 #seki_model{
