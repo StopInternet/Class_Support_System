@@ -9,7 +9,7 @@ search_seki = [];
 students_name = {
 };
 lists_num = 0;
-
+counters = 0;
 /**
  * 連想配列に挿入
  * 連想配列をランダムに入れ替える。
@@ -23,12 +23,14 @@ function MasGene(){
     classMem = tate*yoko;
 
     //説明文の追加
-    document.getElementById("seki_dec").innerHTML = "名前を入力してください<br空欄の箇所は「空席」として、<br>表示されます。<br>";
+    document.getElementById("seki_dec").innerHTML = "名前を入力してください<br>空欄の箇所は「空席」として、<br>表示されます。<br>最大席数："+classMem+"席";
 
     //入力欄の生成処理
     for(var i=1;i<=classMem;i++){
         //idとclassを振り分けたinput情報を配列に入力
-        inputs_seki.push('<div id="sekis_'+i+'">'+String(i).padStart(3,'0')+'  :<input type="text" id="seki_'+i+'"maxlength="16" value=" "><br></div>');
+        inputs_seki.push('<div id="sekis_'+i+'">'+String(i).padStart(3,'0')+'  :'+
+        '<input type="text" id="seki_'+i+'"maxlength="16" size="12" value=" ">'+
+        ' <input type="button" id="locks_"'+i+' value="ロック" size="3" onclick="lock()"></div>');
     }
     //jonで一括展開
     document.getElementById("seki_list").innerHTML = inputs_seki.join('');
@@ -127,29 +129,50 @@ else{
 }
 
 function search(){
-    if(clicked == true){
-    document.getElementById("search_result").innerHTML = "検索結果：";
-    if(document.getElementById("search_result") != null){
-        for(var k=1;k<=classMem;k++){
-        $(document.getElementById("sekis_"+lists_num)).appendTo("#seki_list");
-        }
-    }
-
-    var search_target = document.getElementById("search-text").value;
-    //検索対象を取得
-    var counters=0;
-    lists_num = 0;
-    for(var i=1;i<=search_target;i++){
-        counters++
-        lists_num++
-        if(counters == search_target){
-            $(document.getElementById("sekis_"+counters)).appendTo("#search_result");
+    //席を生成済みかどうかを検知
+    try{
+        if(clicked == true){
+            document.getElementById("the_result").innerHTML = " "
+            for(var i=1;i<=classMem;i++){
+                document.getElementById("sekis_"+i).style.display = 'block'; 
+            }
+            //検索対象を取得
+            var search_target = document.getElementById("search-text").value;
+            counters = 0;
+            if(search_target == String){
+                alert("文字型で入力を行ってください。")
+            }
+            //検索処理
+            for(var i=1;i<=search_target;i++){
+                counters++;
+                sekis_other = search_target + i;
+                if(counters == search_target){
+            //検索結果を表示
+            document.getElementById("the_result").innerHTML = "検索結果：";
+            break;
         }else if(classMem < search_target){
-            document.getElementById("search_result").innerHTML = "<span>検索結果：無し</span>"
+            document.getElementById("the_result").innerHTML = "<span>検索結果：<br>その座席番号はありません。</span>"
             break;
         }
+        document.getElementById("sekis_"+i).style.display = 'none';
     }
 }else{
     //席モデルを生成していない場合。
-    alert('座席モデルを生成してからクリックしてください。')}
+    alert('座席モデルを生成してからクリックしてください。')}}
+    catch(e){
+        alert(e+"エラーが発生しました。\n不具合として報告をお願いします。");
+    }
+}
+
+function Resets(){
+    for(var i=1;i<=classMem;i++){
+        document.getElementById("sekis_"+i).style.display = 'block'; 
+    }
+    document.getElementById("search-text").value = " ";
+    document.getElementById("the_result").innerHTML = " ";
+}
+
+function lock(){
+    var lock_num = document.getElementById('locks_'+i);
+    
 }
