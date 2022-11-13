@@ -9,21 +9,24 @@
 <div class="sekigae">
   縦の列 最大:99 <input type="text" id="tate" value="1" maxlength="2"><br>
   横の列 最大:9  <input type="text" id="yoko" value="1" maxlength="1"><br>
-  名前を入力する<br>
   <input type="button" id="button" value="席を作る" onclick="MasGene()">
   <input type="button" id="names" value="シャッフル" onclick="Shuffle()">
   <br>
   <br>
 
     <input type="text" id="search-text" placeholder="検索番号を入力",value="">
-    <input type="button" id="names_seach" value="検索" onclick="search()">
-  <div id="search_result">
-  </div>
+    <br><input type="button" id="names_seach" value="検索" onclick="search()">
+    <input type="button" id="reset" value="リセット" onclick="Resets()">
+
   <br>
   <br>
   <div id="seki_dec">
+  </div><br>
+
+  <div id="the_result">
   </div>
-  
+  <div id="search_result">
+    </div>
 <div id="seki_list">
 </div>
 </div>
@@ -34,10 +37,12 @@
     <div id="seki_model" >
       <!--席のモデル用-->
       縦と横の列を決めて「席を作る」を<br>
-      クリックすると席一覧のモデルが生成されます
+      クリックすると席一覧のモデルが生成されます<br>
     </div>
     <div id="seki_out">
       <!--席替え後の出力用-->
+      「シャッフル」をクリックすることで、<br>
+      自動的に席替えが開始されます。<br>
     </div>
     <div><!--席テーブルここまで-->
     
