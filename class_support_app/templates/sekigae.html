@@ -9,15 +9,19 @@
 <div class="sekigae">
   縦の列 最大:99 <input type="text" id="tate" value="1" maxlength="2"><br>
   横の列 最大:9  <input type="text" id="yoko" value="1" maxlength="1"><br>
-  <input type="button" id="button" value="席を作る" onclick="MasGene()">
-  <input type="button" id="names" value="シャッフル" onclick="Shuffle()">
+  <!--席の生成-->
+  <input type="button" id="button" value="席を作る" onclick="MasGene()"><br>
+  <!--席のシャッフル-->
+  <input type="button" id="names" value="シャッフル" onclick="Shuffle()"><br>
+  <!--CSV出力-->
+  <input type="button" id="downloads" value="名前を出力" onclick="out_put()"><br>
+  <!--CSV読み込み-->
+  csvを読み込む<br>
+  <input type="file" id="file_input" value="csvを読み込む" onchange="change_csv(this)"><br>
   <br>
-  <br>
-
     <input type="text" id="search-text" placeholder="検索番号を入力",value="">
     <br><input type="button" id="names_seach" value="検索" onclick="search()">
     <input type="button" id="reset" value="リセット" onclick="Resets()">
-
   <br>
   <br>
   <div id="seki_dec">
@@ -27,7 +31,8 @@
   </div>
   <div id="search_result">
     </div>
-<div id="seki_list">
+
+<div id="seki_list" >
 </div>
 </div>
 
