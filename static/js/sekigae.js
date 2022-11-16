@@ -1,20 +1,30 @@
 //定義
-clicked = false;
-tate = 0;
-yoko = 0;
-classMem = tate*yoko;
-inputs_seki = [null];
+clicked = false;//クリック判定
+tate = 0; //縦の列の取得
+yoko = 0; //横の列の取得
+classMem = tate*yoko;//席数の取得
+inputs_seki = [null];//席数を挿入
 names_list = [];
 search_seki = [];
+no_shuffle_student = {
+}
 students_name = {
 };
+no_shuffle_target ={
+}//シャフル対象外の多次元配列
+lock_targets = 0;
 lists_num = 0;
 counters = 0;
+count_tag = 0;
+nametxt_input = [
+
+]
 /**
  * 連想配列に挿入
  * 連想配列をランダムに入れ替える。
  * それをtableに出力させる。
  * マスもきちんと設定する
+ * エクセルファイルを読み込めるようにする。
  */
 function MasGene(){
     if(clicked!=true){
@@ -30,7 +40,7 @@ function MasGene(){
         //idとclassを振り分けたinput情報を配列に入力
         inputs_seki.push('<div id="sekis_'+i+'">'+String(i).padStart(3,'0')+'  :'+
         '<input type="text" id="seki_'+i+'"maxlength="16" size="12" value=" ">'+
-        ' <input type="button" id="locks_"'+i+' value="ロック" size="3" onclick="lock()"></div>');
+        '</div>');
     }
     //jonで一括展開
     document.getElementById("seki_list").innerHTML = inputs_seki.join('');
@@ -62,6 +72,7 @@ function MasGene(){
     }
 }
 else{
+    //二回クリックしたとき
     alert('一度のみクリックができます。\n再設定したい場合は、\nページを再読み込みしてください。')
 }
 }
@@ -77,22 +88,31 @@ function Shuffle(){
         if(document.getElementById("seki_"+i).value == " "){
             //空欄だった場合、空席を挿入
             students_name[i] = "空席"
+            no_shuffle_student[i] = "空席"
         }else{
             //入力済みの場合、生徒名を挿入
             students_name[i] = document.getElementById("seki_"+i).value;
+            no_shuffle_student[i] = document.getElementById("seki_"+i).value;
         }
     }
 
     //シャッフル処理
     function random_apps(classMem2){
+        count_tag = 0;
         for(var i = classMem2; 1 <= i; i--){
+            count_tag++;
+            var the_target = document.getElementById("seki_"+i);
             // 0〜(i+1)の範囲で値を取得
             var r = 1 + Math.floor(Math.random()*i);
+            if(no_shuffle_target[r] != null){
+                continue;
+            }
             // 要素の並び替えを実行
             var tmp = students_name[i];
             students_name[i] = students_name[r];
             students_name[r] = tmp;
-          }
+            
+        }
           return students_name;
     }
 
@@ -115,9 +135,9 @@ function Shuffle(){
         let namei = document.createElement('tr');
         for(var i = 1; i <= yoko;i++){
             let i_data = document.createElement('td');
-            i_data.innerHTML = "&nbsp&nbsp"+students_name[count]+"&nbsp&nbsp";
-            namei.appendChild(i_data);
-            count++;
+                i_data.innerHTML = "&nbsp&nbsp"+students_name[count]+"&nbsp"
+                namei.appendChild(i_data);
+                count++;
         }
     tbody.appendChild(namei);
   }
@@ -164,6 +184,7 @@ function search(){
     }
 }
 
+//検索履歴のリセット処理
 function Resets(){
     for(var i=1;i<=classMem;i++){
         document.getElementById("sekis_"+i).style.display = 'block'; 
@@ -172,7 +193,73 @@ function Resets(){
     document.getElementById("the_result").innerHTML = " ";
 }
 
-function lock(){
-    var lock_num = document.getElementById('locks_'+i);
+//ファイル出力処理
+function out_put(){
+    if(clicked == true){
+    namelists = [];
+    //入力値を配列に出力
+    //namelists.push("id")
+    for(var i=1;i<=classMem;i++){
+        namelists.push(document.getElementById('seki_'+i).value);
+    }
+    //csvに展開
+    var content  = namelists.join('\n');
+    //csvの生成
+    var mimeType = 'text/plain';
+    var name     = 'name_list.text';
+    var bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
+    var blob = new Blob([bom, content], {type : mimeType});
+    var named = document.createElement('named');
+    named.download = name;
+    named.target   = '_blank';
     
+    //ダウンロード処理（ブラウザごとに違う）
+    if (window.navigator.msSaveBlob) {
+        window.navigator.msSaveBlob(blob, name)
+    }else if (window.URL && window.URL.createObjectURL) {
+        named.href = window.URL.createObjectURL(blob);
+        document.body.appendChild(a);
+        named.click();
+        document.body.removeChild(a);
+    }else if (window.webkitURL && window.webkitURL.createObject) {
+        named.href = window.webkitURL.createObjectURL(blob);
+        named.click();
+    }else {
+        window.open('data:' + mimeType + ';base64,' + window.Base64.encode(content), '_blank');
+    }
+}else{
+    alert('座席モデルを生成してからクリックしてください。')
+}
+}
+
+function change_csv(){
+    var obj1 = document.getElementById("file_input");
+    counter_txt = 0;
+    list_num = 1;
+    str_m = -1;
+    obj1.addEventListener("change",function(evt){
+        var file = evt.target.files;
+        var reader = new FileReader();
+        reader.readAsText(file[0]);
+        reader.onload = function(ev){
+            for(var g=0;g<=reader.result.length;g++){
+                if(reader.result[g] != ' '){
+                    counter_txt++
+                }else{
+                    if(counter_txt != 0){
+                        for(var y=1;y<=counter_txt;y++){
+                            nametxt_input[list_num] = reader.result[str_m];
+                            str_m++
+                    }
+                    counter_txt = 0;
+                }
+                str_m++;
+            }
+        }
+            for(var h=1;h<=classMem;h++){
+            document.getElementById("seki_"+h).value = nametxt_input[h]
+            }
+  }
+},false);
+
 }
