@@ -1,37 +1,40 @@
 //定義
-clicked = false;//クリック判定
-tate = 0; //縦の列の取得
-yoko = 0; //横の列の取得
-classMem = tate*yoko;//席数の取得
-inputs_seki = [null];//席数を挿入
+//クリックの判定
+clicked = false;
+//縦の取得
+tate = 0;
+//横の取得 
+yoko = 0;
+//席数の取得
+classMem = tate*yoko;
+//席数を挿入
+inputs_seki = [null];
 names_list = [];
 search_seki = [];
 no_shuffle_student = {
-}
+
+};
 students_name = {
 };
+//シャフル対象外の多次元配列
 no_shuffle_target ={
-}//シャフル対象外の多次元配列
+}
 lock_targets = 0;
 lists_num = 0;
 counters = 0;
 count_tag = 0;
 nametxt_input = [
-
 ]
-/**
- * 連想配列に挿入
- * 連想配列をランダムに入れ替える。
- * それをtableに出力させる。
- * マスもきちんと設定する
- * エクセルファイルを読み込めるようにする。
- */
+
+//マスの生成。
 function MasGene(){
     if(clicked!=true){
-    tate = document.getElementById("tate").value;
-    yoko = document.getElementById("yoko").value;
-    classMem = tate*yoko;
-
+        //値が0の時各種値を取得する。
+        if(tate == 0 || yoko == 0 || classMem == 0){
+            tate = document.getElementById("tate").value;
+            yoko = document.getElementById("yoko").value;
+            classMem = tate*yoko;
+    }
     //説明文の追加
     document.getElementById("seki_dec").innerHTML = "名前を入力してください<br>空欄の箇所は「空席」として、<br>表示されます。<br>最大席数："+classMem+"席";
 
@@ -45,22 +48,28 @@ function MasGene(){
     //jonで一括展開
     document.getElementById("seki_list").innerHTML = inputs_seki.join('');
     clicked = true;
-
     //テーブルの生成
+    //tableの設定
     let table = document.createElement('table');
     table.setAttribute('id','sekiTM');
     table.setAttribute('border','1');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
+    //tbodyの設定
     tbody.setAttribute('id','seki_model_body');
     table.appendChild(thead);
     table.appendChild(tbody);
-
     //divに登録
     document.getElementById('seki_model').appendChild(table);
     
     var counter = 1;
+    //テーブルを生成。
     for(var r=1;r<=tate;r++){
+        /**
+         * trで一列分を生成。
+         * tdで名前を挿入
+         * 見やすさで空白を挿入
+         */
         let nameis = document.createElement('tr');
         for(var j=1;j<=yoko;j++){
             let j_data = document.createElement('td');
@@ -70,6 +79,9 @@ function MasGene(){
         }
         tbody.appendChild(nameis);
     }
+
+    //csv読み込みを生成
+    document.getElementById('input_csv').innerHTML = 'csvを読み込む<br><input type="file" id="getfile" accept="text/*" onchange="init();">'
 }
 else{
     //二回クリックしたとき
@@ -88,11 +100,9 @@ function Shuffle(){
         if(document.getElementById("seki_"+i).value == " "){
             //空欄だった場合、空席を挿入
             students_name[i] = "空席"
-            no_shuffle_student[i] = "空席"
         }else{
             //入力済みの場合、生徒名を挿入
             students_name[i] = document.getElementById("seki_"+i).value;
-            no_shuffle_student[i] = document.getElementById("seki_"+i).value;
         }
     }
 
@@ -101,12 +111,8 @@ function Shuffle(){
         count_tag = 0;
         for(var i = classMem2; 1 <= i; i--){
             count_tag++;
-            var the_target = document.getElementById("seki_"+i);
             // 0〜(i+1)の範囲で値を取得
             var r = 1 + Math.floor(Math.random()*i);
-            if(no_shuffle_target[r] != null){
-                continue;
-            }
             // 要素の並び替えを実行
             var tmp = students_name[i];
             students_name[i] = students_name[r];
@@ -118,10 +124,12 @@ function Shuffle(){
 
     //テーブルの生成
     let table = document.createElement('table');
+    //テーブルの設定
     table.setAttribute('id','sekiTO');
     table.setAttribute('border','1');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
+    //tbodyの設定
     tbody.setAttribute('id','seki_body');
     table.appendChild(thead);
     table.appendChild(tbody);
@@ -203,10 +211,10 @@ function out_put(){
         namelists.push(document.getElementById('seki_'+i).value);
     }
     //csvに展開
-    var content  = namelists.join('\n');
+    var content  = namelists.join(',');
     //csvの生成
     var mimeType = 'text/plain';
-    var name     = 'name_list.text';
+    var name     = 'name_list.csv';
     var bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
     var blob = new Blob([bom, content], {type : mimeType});
     var named = document.createElement('named');
@@ -232,34 +240,39 @@ function out_put(){
 }
 }
 
-function change_csv(){
-    var obj1 = document.getElementById("file_input");
-    counter_txt = 0;
-    list_num = 1;
-    str_m = -1;
-    obj1.addEventListener("change",function(evt){
-        var file = evt.target.files;
-        var reader = new FileReader();
-        reader.readAsText(file[0]);
-        reader.onload = function(ev){
-            for(var g=0;g<=reader.result.length;g++){
-                if(reader.result[g] != ' '){
-                    counter_txt++
-                }else{
-                    if(counter_txt != 0){
-                        for(var y=1;y<=counter_txt;y++){
-                            nametxt_input[list_num] = reader.result[str_m];
-                            str_m++
-                    }
-                    counter_txt = 0;
-                }
-                str_m++;
-            }
+//読み込み処理
+function init(){
+    if(clicked =true){
+    //ファイル値の取得
+    var file = document.querySelector('#getfile');
+    //csv→配列に。
+    var nums = [];
+    //value値のリセット
+    for(var h = 1;h<=classMem;h++){
+            document.getElementById("seki_"+h).value = " ";
         }
-            for(var h=1;h<=classMem;h++){
-            document.getElementById("seki_"+h).value = nametxt_input[h]
+    //input変化時に読み込む
+    file.onchange = function (){
+        var fileList = file.files;
+        var reader = new FileReader();
+        reader.readAsText(fileList[0]);
+        //読み込み後表示
+        reader.onload = function  () {
+            countnum = 1
+        //csvを「,」で配列に挿入
+        for(var i = 0;i<=reader.result.length;i++){
+            if(reader.result[i] == ' '){
+                continue;
             }
-  }
-},false);
-
+            nums = reader.result.split(',')
+        }
+        //seki_ valueに上書き表示
+        for(var j=1;j<=nums.length;j++){
+            document.getElementById("seki_"+j).value = nums[j-1]
+        }
+    };
+};
+}else{
+    alert('座席モデルを生成してからクリックしてください。')
 }
+};
