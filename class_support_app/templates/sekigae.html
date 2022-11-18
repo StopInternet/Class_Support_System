@@ -13,8 +13,6 @@
   <input type="button" id="button" value="席を作る" onclick="MasGene()"><br>
   <!--席のシャッフル-->
   <input type="button" id="names" value="シャッフル" onclick="Shuffle()"><br>
-  <!--CSV出力-->
-  <input type="button" id="downloads" value="名前を出力" onclick="out_put()">
   <br>
   <br>
     <input type="text" id="search-text" placeholder="検索番号を入力",value="">
@@ -22,9 +20,12 @@
     <input type="button" id="reset" value="リセット" onclick="Resets()">
   <br>
   <br>
-  <div id="input_csv">
+  
+  <div id="input_csv" style="width=300px">
     <!--CSV読み込み-->
-  </div>
+  </div><br>
+  <div id="output_csv">
+  </div><br>
   <div id="seki_dec">
   </div><br>
 
