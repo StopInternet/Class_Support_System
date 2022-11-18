@@ -9,8 +9,12 @@ yoko = 0;
 classMem = tate*yoko;
 //席数を挿入
 inputs_seki = [null];
-names_list = [];
-search_seki = [];
+names_list = [
+
+];
+search_seki = [
+
+];
 no_shuffle_student = {
 
 };
@@ -22,7 +26,6 @@ no_shuffle_target ={
 lock_targets = 0;
 lists_num = 0;
 counters = 0;
-count_tag = 0;
 nametxt_input = [
 ]
 
@@ -53,15 +56,17 @@ function MasGene(){
     let table = document.createElement('table');
     table.setAttribute('id','sekiTM');
     table.setAttribute('border','1');
+    //theadの設定
     let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
     //tbodyの設定
+    let tbody = document.createElement('tbody');
     tbody.setAttribute('id','seki_model_body');
     table.appendChild(thead);
     table.appendChild(tbody);
     //divに登録
     document.getElementById('seki_model').appendChild(table);
     
+    //配列読み込み用のカウンター
     var counter = 1;
     //テーブルを生成。
     for(var r=1;r<=tate;r++){
@@ -77,11 +82,15 @@ function MasGene(){
             nameis.appendChild(j_data);
             counter++;
         }
+        //一列分の挿入。
         tbody.appendChild(nameis);
     }
 
     //csv読み込みを生成
-    document.getElementById('input_csv').innerHTML = 'csvを読み込む<br><input type="file" id="getfile" accept="text/*" onchange="init();">'
+    document.getElementById('input_csv').innerHTML = 'csvを読み込む<br><input type="file" id="getfile" accept="text/*" onchange="init();" style="size:300px">';
+
+    //csv出力を生成
+    document.getElementById('output_csv').innerHTML = '<input type="button" id="downloads" value="名前を出力(CSV)" onclick="out_put()">';
 }
 else{
     //二回クリックしたとき
@@ -92,9 +101,11 @@ else{
 //シャッフルボタンの機能
 function Shuffle(){
   if(clicked == true){
+    //既にテーブルがあった場合、テーブルの内容を削除
     if(document.getElementById("sekiTO") != null){
-    document.getElementById("sekiTO").remove();
+        document.getElementById("sekiTO").remove();
     }
+    //配列の生成
     for(var i=1;i<=classMem;i++){
         //生徒名を連想配列に挿入
         if(document.getElementById("seki_"+i).value == " "){
@@ -108,9 +119,8 @@ function Shuffle(){
 
     //シャッフル処理
     function random_apps(classMem2){
-        count_tag = 0;
+        //forで処理
         for(var i = classMem2; 1 <= i; i--){
-            count_tag++;
             // 0〜(i+1)の範囲で値を取得
             var r = 1 + Math.floor(Math.random()*i);
             // 要素の並び替えを実行
@@ -119,6 +129,7 @@ function Shuffle(){
             students_name[r] = tmp;
             
         }
+        //リターンで配列を返す。
           return students_name;
     }
 
@@ -127,19 +138,26 @@ function Shuffle(){
     //テーブルの設定
     table.setAttribute('id','sekiTO');
     table.setAttribute('border','1');
+    //theadの設定
     let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
     //tbodyの設定
+    let tbody = document.createElement('tbody');
     tbody.setAttribute('id','seki_body');
     table.appendChild(thead);
     table.appendChild(tbody);
+
     //divに登録
     document.getElementById('seki_out').appendChild(table);
+    //配列用のカウンターを設定
     var count = 1;
     //ランダムを起動
     random_apps(classMem);
     //席替え後のテーブルを生成
     for(var k = 1; k<=tate; k++){
+        /**
+         * trで横一列分の設定
+         * tdで横一列の名前の設定
+         */
         let namei = document.createElement('tr');
         for(var i = 1; i <= yoko;i++){
             let i_data = document.createElement('td');
@@ -147,7 +165,8 @@ function Shuffle(){
                 namei.appendChild(i_data);
                 count++;
         }
-    tbody.appendChild(namei);
+        //tbodyで一列分を生成。
+        tbody.appendChild(namei);
   }
 }
 else{
@@ -156,8 +175,12 @@ else{
 }
 }
 
+//検索機能
 function search(){
-    //席を生成済みかどうかを検知
+    /**
+     * 席を生成済みかどうかを検知
+     * tryで例外処理に対応。
+     */
     try{
         if(clicked == true){
             document.getElementById("the_result").innerHTML = " "
@@ -172,107 +195,116 @@ function search(){
             }
             //検索処理
             for(var i=1;i<=search_target;i++){
+                //検索対象までカウンターに+1を設定
                 counters++;
-                sekis_other = search_target + i;
                 if(counters == search_target){
-            //検索結果を表示
-            document.getElementById("the_result").innerHTML = "検索結果：";
-            break;
-        }else if(classMem < search_target){
-            document.getElementById("the_result").innerHTML = "<span>検索結果：<br>その座席番号はありません。</span>"
-            break;
-        }
-        document.getElementById("sekis_"+i).style.display = 'none';
-    }
-}else{
-    //席モデルを生成していない場合。
-    alert('座席モデルを生成してからクリックしてください。')}}
-    catch(e){
+                    //検索結果を表示
+                    document.getElementById("the_result").innerHTML = "検索結果：";
+                    break;
+                }else if(classMem < search_target){
+                    //検索対象が数値以外の場合
+                    document.getElementById("the_result").innerHTML = "<span>検索結果：<br>その座席番号はありません。</span>"
+                    break;
+                }
+                //検索対象になるまで入力欄を非表示にする。
+                document.getElementById("sekis_"+i).style.display = 'none';
+            }
+        }else{
+            //席モデルを生成していない場合。
+            alert('座席モデルを生成してからクリックしてください。')}
+        }catch(e){
+        //例外がエラー発生時の処理。
         alert(e+"エラーが発生しました。\n不具合として報告をお願いします。");
     }
 }
 
 //検索履歴のリセット処理
 function Resets(){
+    //入力欄のすべてを表示させる処理。
     for(var i=1;i<=classMem;i++){
         document.getElementById("sekis_"+i).style.display = 'block'; 
     }
+    //検索対象と、検索結果の値を空にする。
     document.getElementById("search-text").value = " ";
     document.getElementById("the_result").innerHTML = " ";
 }
 
 //ファイル出力処理
 function out_put(){
+    //席数を生成したかどうかを検知
     if(clicked == true){
-    namelists = [];
-    //入力値を配列に出力
-    //namelists.push("id")
-    for(var i=1;i<=classMem;i++){
-        namelists.push(document.getElementById('seki_'+i).value);
+        namelists = [];
+        //入力値を配列に出力
+        for(var i=1;i<=classMem;i++){
+            namelists.push(document.getElementById('seki_'+i).value);
+        }
+        //csvに展開し、改行して縦列に変換
+        var content  = namelists.join(',\n');
+        //csvの生成
+        var mimeType = 'text/plain';
+        var name     = 'name_list.csv';
+        var bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
+        var blob = new Blob([bom, content], {type : mimeType});
+        var named = document.createElement('named');
+        named.download = name;
+        named.target   = '_blank';
+        //ダウンロード処理（各ブラウザごとに処理が違う）
+        if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveBlob(blob, name)
+        }else if (window.URL && window.URL.createObjectURL) {
+            named.href = window.URL.createObjectURL(blob);
+            document.body.appendChild(a);
+            named.click();
+            document.body.removeChild(a);
+        }else if (window.webkitURL && window.webkitURL.createObject) {
+            named.href = window.webkitURL.createObjectURL(blob);
+            named.click();
+        }else {
+            window.open('data:' + mimeType + ';base64,' + window.Base64.encode(content), '_blank');
+        }
+    }else{
+        //席数が押されていなかった場合。
+        alert('座席モデルを生成してからクリックしてください。')
     }
-    //csvに展開
-    var content  = namelists.join(',');
-    //csvの生成
-    var mimeType = 'text/plain';
-    var name     = 'name_list.csv';
-    var bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
-    var blob = new Blob([bom, content], {type : mimeType});
-    var named = document.createElement('named');
-    named.download = name;
-    named.target   = '_blank';
-    
-    //ダウンロード処理（ブラウザごとに違う）
-    if (window.navigator.msSaveBlob) {
-        window.navigator.msSaveBlob(blob, name)
-    }else if (window.URL && window.URL.createObjectURL) {
-        named.href = window.URL.createObjectURL(blob);
-        document.body.appendChild(a);
-        named.click();
-        document.body.removeChild(a);
-    }else if (window.webkitURL && window.webkitURL.createObject) {
-        named.href = window.webkitURL.createObjectURL(blob);
-        named.click();
-    }else {
-        window.open('data:' + mimeType + ';base64,' + window.Base64.encode(content), '_blank');
-    }
-}else{
-    alert('座席モデルを生成してからクリックしてください。')
-}
 }
 
 //読み込み処理
 function init(){
+    //席数が作られているかどうかの検知
     if(clicked =true){
-    //ファイル値の取得
-    var file = document.querySelector('#getfile');
-    //csv→配列に。
-    var nums = [];
-    //value値のリセット
-    for(var h = 1;h<=classMem;h++){
+        //ファイル値の取得
+        var file = document.querySelector('#getfile');
+        //csv→配列に。
+        var nums = [];
+        //value値のリセット
+        for(var h = 1;h<=classMem;h++){
             document.getElementById("seki_"+h).value = " ";
         }
-    //input変化時に読み込む
-    file.onchange = function (){
-        var fileList = file.files;
-        var reader = new FileReader();
-        reader.readAsText(fileList[0]);
-        //読み込み後表示
+        //input変化時に読み込む
+        file.onchange = function (){
+            var fileList = file.files;
+            var reader = new FileReader();
+            reader.readAsText(fileList[0]);
+            //読み込み後表示
         reader.onload = function  () {
             countnum = 1
-        //csvを「,」で配列に挿入
-        for(var i = 0;i<=reader.result.length;i++){
-            if(reader.result[i] == ' '){
-                continue;
+            //csvを「,」で配列に挿入
+            for(var i = 0;i<=reader.result.length;i++){
+                if(reader.result[i] == ' '){
+                    //値が空白だった場合、スルー
+                    continue;
+                }
+                //「,」がつくまで配列に挿入
+                nums = reader.result.split(',')
             }
-            nums = reader.result.split(',')
-        }
-        //seki_ valueに上書き表示
-        for(var j=1;j<=nums.length;j++){
-            document.getElementById("seki_"+j).value = nums[j-1]
-        }
+            //seki_ valueに上書き表示
+            for(var j=1;j<=nums.length;j++){
+                document.getElementById("seki_"+j).value = nums[j-1]
+            }
+        };
     };
-};
 }else{
+    //席数が押されていなかった場合の処理。
     alert('座席モデルを生成してからクリックしてください。')
-}
+  }
 };
