@@ -8,4 +8,5 @@
   3.席替え補助<br>
   4.ミニテスト<br>
   5.認証機能<br>
+  https://di-acc2.com/programming/python/2563/<br>
 </p>
