@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} ログイン {% endblock %}
+{% block body %} 
+<h1>ログインメニュー</h1>
+<p>教員か生徒でログイン方法が変わります。</p>
+<form name="form1">
+<select name="login_target">
+   <option value="teacher">教員向け</option>
+   <option value="students">生徒向け</option>
+</select>
+</form>
+<input type="button" id="jump_login" value="ログイン画面の表示" onclick="login_targets()">
+<div id="login_menu">
+   
+</div>
+<script src="{% static 'js/login.js'%}">
+{% endblock %}
