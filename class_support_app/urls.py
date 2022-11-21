@@ -10,5 +10,6 @@ urlpatterns = [
     path('timer_aocc_zyouzyo',views.TimerAocczyouzyoView.as_view(),name="timer_aocc_zyouzyo"),
     path('timer_aocc_mitori',views.TimerAoccmitoriView.as_view(),name="timer_aocc_mitori"),
     path('timer_aocc_denpyou',views.TimerAoccdenpyouView.as_view(),name="timer_aocc_denpyou"),
-    path('sekigae',views.SekigaeView.as_view(),name="sekigae")
+    path('sekigae',views.SekigaeView.as_view(),name="sekigae"),
+    
 ]
