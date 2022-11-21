@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'class_support_app.apps.ClassSupportAppConfig',
-    
+    'accounts.apps.AccountsConfig',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'class_support_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'class_support_apps',
+        'NAME':'accounts_teachers',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'o-hara',
         'HOST':'localhost',
         'POST':'',
     }
@@ -173,37 +173,37 @@ STATICFILES_DIRS = (
 )
 
 #カスタムユーザーモデルを参照
-#AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 #サイト識別IDの設定
-#SITE_ID = 1
+SITE_ID = 1
 
-#AUTHENTICATION_BACKENDS = (
- #   'allauth.account.auth_backends.AuthenticationBackend',
-  #  'django.contrib.auth.backends.ModelBackend',
-#)
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 #
 ##メールアドれrス認証に変更する設定
-#ACCOUNT_AUTHENTICATION_METHOD = 'email'
-#ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
 
 #サインアップにメールアドレス確認を挟むよう設定
-#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-#ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
 
 #ログイン/ログアウト後の遷移先を設定
-#LOGIN_REDIRECT_URL = 'title:index'
-#ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'class_support_app:index'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 
 #ログアウトリンクのクリック一発でログアウトする設定
-#ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGOUT_ON_GET = True
 
 #django-allauthが送信するメールの県名に自動付与される接頭辞をブランクにする設定
-#ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 
 #デフォルトのメール送信元を設定
-#DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
+DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 
 #EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
@@ -214,5 +214,6 @@ STATICFILES_DIRS = (
    # messages.INFO: 'alert alert-info',
 #}
 
-#MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
