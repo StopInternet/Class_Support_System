@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'django_bootstrap5',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'accounts_teachers',
+        'USER': 'postgres',
+        'PASSWORD': 'o-hara',
+        'HOST':'localhost',
+        'POST':'',
+    },
+    'db2':{
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':'accounts_students',
         'USER': 'postgres',
         'PASSWORD': 'o-hara',
         'HOST':'localhost',
