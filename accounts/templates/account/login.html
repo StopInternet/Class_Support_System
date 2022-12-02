@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load django_bootstrap5 %}
 
-{% block title %} 授業支援サイト{% endblock %}
-{% block subtitle%} ログイン {% endblock %}
-{% block body %} 
-<h1>ログインメニュー</h1>
-<p>教員か生徒でログイン方法が変わります。</p>
-<input type="button" id="jump_login" value="先生向けログインページ" onclick="login_teachers()">
-<input type="button" id="jump_login" value="生徒向けログインページ" onclick="login_students()">
-<div id="login_menu">
-</div>
-<a href="{% url 'class_support_app:register_student'%}">gegrege</a>
-<script src="{% static 'js/login.js'%}">
+{% block title %}LogIn{% endblock %}
+
+{% block active_login %}active{% endblock %}
+
+{% block body %}
+<div id="account_student">
+            <h1>ログイン</h1>
+            <form method="post" action="{% url 'account_login' %}" id="form_student">
+                {% csrf_token %}
+
+                <div class="mb-4 col-4">
+                    {% bootstrap_form form %}
+                </div>
+
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+
+                <button class="btn btn-primary" type="submit" >ログイン</button>
+                <p><a class="button secondaryAction" href="{% url 'account_reset_password' %}">パスワードを忘れましたか？</a></p>
+            </form>
+        </div>
 {% endblock %}
