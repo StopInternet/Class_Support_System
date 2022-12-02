@@ -118,3 +118,7 @@ function showTime(min, sec){
   context.fillStyle = "#000000";
   context.fillText(text, 100, 275);
 }
+
+function init(){
+  
+}
