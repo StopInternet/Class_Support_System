@@ -84,20 +84,20 @@ WSGI_APPLICATION = 'class_support_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'accounts_teachers',
-        'USER': 'postgres',
-        'PASSWORD': 'o-hara',
-        'HOST':'localhost',
-        'POST':'',
-    },
-    'db2':{
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'accounts_students',
         'USER': 'postgres',
         'PASSWORD': 'o-hara',
         'HOST':'localhost',
         'POST':'',
-    }
+    },
+   # 'db2':{
+   #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #    'NAME':'accounts_teachers',
+     #   'USER': 'postgres',
+      #  'PASSWORD': 'o-hara',
+       # 'HOST':'localhost',
+        #'POST':'',
+    #}
 }
 
 # Password validation
@@ -181,8 +181,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
 
-#カスタムユーザーモデルを参照
-AUTH_USER_MODEL = 'accounts.CustomUser'
+
 
 #サイト識別IDの設定
 SITE_ID = 1
@@ -192,10 +191,13 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
 #
 ##メールアドれrス認証に変更する設定
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 
 #サインアップにメールアドレス確認を挟むよう設定
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
