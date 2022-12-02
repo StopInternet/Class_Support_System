@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} ユーザー情報 {% endblock %}
+{% block body %} 
+<div class="user_form">
+<form class="my-form" action="" method="POST">
+<div class="form-group">
+  <label for="id_username">ユーザーネーム</label>
+  {{ form.username }}
+  {{ form.username.errors}}
+  <p class="help-block">{{ form.username.help_text }}</p>
+</div>
+<div class="form-group">
+  <label for="id_email">メールアドレス</label>
+  {{ form.email }}
+  {{ form.email.errors}}
+  <p class="help-block">{{ form.email.help_text }}</p>
+</div>
+<div class="form-group">
+  <label for="password">パスワード</label>
+  {{ form.password1 }}
+  {{ form.password1.errors}}
+  <p class="help-block">{{ form.password1.help_text }}</p>
+</div>
+<div class="form-group">
+  <label for="password2">パスワード（確認）</label>
+  {{ form.password2 }}
+  {{ form.password2.errors}}
+  <p class="help-block">{{ form.password2.help_text }}</p>
+</div>
+<div class="form-group">
+  <label for="frist_name">名字
+
+  </label>
+  {{ form.first_name }}
+  {{ form.first_name.errors}}
+  <p class="help-block">{{ form.first_name.help_text }}</p>
+</div>
+<div class="form-group">
+  <label for="last_name">名前</label>
+  {{ form.last_name }}
+  {{ form.last_name.errors}}
+  <p class="help-block">{{ form.last_name.help_text }}</p>
+</div>
+<div class="form-group">
+  <label for="last_name">教員の場合選択してください。</label>
+  {{ admin.is_superuser }}
+  <p class="help-block"></p>
+</div>
+<div class="form-group">
+  <input type="submit" class="btn btn-default" value="登録">
+</div>
+{% csrf_token %}
+</form>
+<div>
+{% endblock %}

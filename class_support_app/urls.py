@@ -11,5 +11,10 @@ urlpatterns = [
     path('timer_aocc_mitori',views.TimerAoccmitoriView.as_view(),name="timer_aocc_mitori"),
     path('timer_aocc_denpyou',views.TimerAoccdenpyouView.as_view(),name="timer_aocc_denpyou"),
     path('sekigae',views.SekigaeView.as_view(),name="sekigae"),
-    path('register_student',views.register_studentView.as_view(),name="register_student"),
+    path('login_student',views.login_Student.as_view(),name="login"),
+    path('profile',views.profile,name="profile"), 
+    path('logout/', views.logoutfunc, name='logout'),
+    path('profile_change',views.change_data,name="profile_change"),
+    path('profile_password',views.change_password,name="profile_password"),
+    path('profile_register',views.register,name="profile_register")
 ]

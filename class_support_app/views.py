@@ -1,9 +1,23 @@
 from django.views import generic
-from django.views.generic import TemplateView ,CreateView
-from .forms import data_form_student
-from django.shortcuts import render,redirect
-from django.contrib.auth import login,authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, models, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.views.generic import FormView
+from .forms import UserChangeFrom,UserPasswordChangeForm,UserCreationForm ,UserCreateForm
+from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,get_object_or_404,redirect
+
+def logoutfunc(request):
+    template_name = "index.html"
+    logout(request,template_name)
+
+class OnlyYouMixin(UserPassesTestMixin):
+    raise_exception = True
+    def beta_func(self):
+        user = self.request.user
+        return user.pk == self.kwargs['pk'] or user.is_superuser
+
 class IndexView(generic.TemplateView):
     template_name = "index.html"
 
@@ -30,27 +44,50 @@ class SekigaeView(generic.TemplateView):
 
 class register_studentView(generic.TemplateView):
     template_name = "register_student.html"
-    
-class Create_account(CreateView):
-    def post(self,request,*args,**kwargs):
-        form=data_form_student(data=request.POST)
-        if form.is_valid():
-            form.save()
-            class_id = form.cleaned_data.get('class_id')
-            students_number = form.cleaned_data.get('students_number')
-            name = form.cleaned_data.get('name')
-            password = form.cleaned_data.get('password')
 
-            student_user = authenticate(
-                class_id= class_id,
-                students_number=students_number,
-                name=name,
-                password=password)
-            login(request,student_user)
-            return redirect('/')
-        return render(request,'register_student.html',{'form':form,})
+class login_Student(generic.TemplateView):
+    template_name = "login.html"
+
+#ユーザー情報確認
+def profile(request):
+    template_name = "profile.html"
+    context = {
+        'user':request.user
+    }
+    return render(request,template_name,context)
+
+#新規登録
+def register(request):
+    form = UserCreateForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        user = form.save(commit=False)
+        user.save()
+        return redirect("class_support_app:index")
+    context = {
+        "form": form,
+    }
+    return render(request,'profile_register.html',context)
+
+#ログイン情報の変更
+@login_required
+def change_data(request):
+    form = UserChangeFrom(request.POST or None, instance=request.user)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("class_support_app:index")
     
-    def get(self,request,*args,**kwargs):
-        form = data_form_student(request.POST)
-        return render(request,'register_student.html',{'form':form,})
-create_account = Create_account.as_view()
+    context = {
+        "form": form,
+    }
+    return render(request,'profile_change.html',context)
+
+@login_required
+def change_password(request):
+    form = UserPasswordChangeForm(request.user,request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("class_support_app:index")
+    context = {
+        "form":form,
+    }
+    return render(request,'profile_password.html',context)

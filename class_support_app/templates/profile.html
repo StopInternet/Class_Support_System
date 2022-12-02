@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} ユーザー情報 {% endblock %}
+{% block body %} 
+
+<div class="user_form">
+  <h2>ログイン情報</h2>
+  <p>初回ログインの方は<br>
+    必ずパスワードを変更を行ってください。</p>
+<h4>名前</h4>
+<input type="text" value="{{ user.first_name }} {{ user.last_name }}" style="width:300px" disabled><br><br>
+<h4>メールアドレス</h4>
+
+<input type="text" value="{{ user.email }}" style="width:300px" disabled>
+{{ form.password }}
+<br><br>
+
+<a href="{% url 'class_support_app:profile_register'%}">新規ユーザーを作成</a>
+<a href="{% url 'class_support_app:profile_password'%}">パスワードを変更</a>
+<br>
+<a href="{% url 'class_support_app:profile_change'%}">ユーザー情報を変更</a>
+</div>
+
+{% endblock %}
