@@ -7,7 +7,12 @@ from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,get_object_or_404,redirect
+from django.contrib.auth.views import LoginView, LogoutView
 
+def logoutfunc(request):
+    template_name = "index.html"
+    logout(request)
+    
 def logoutfunc(request):
     template_name = "index.html"
     logout(request,template_name)
