@@ -16,7 +16,11 @@
 {{ form.password }}
 <br><br>
 
+{% if user.is_superuser %}
 <a href="{% url 'class_support_app:profile_register'%}">新規ユーザーを作成</a>
+<br>
+{% endif %}
+
 <a href="{% url 'class_support_app:profile_password'%}">パスワードを変更</a>
 <br>
 <a href="{% url 'class_support_app:profile_change'%}">ユーザー情報を変更</a>

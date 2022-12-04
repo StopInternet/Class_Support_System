@@ -4,8 +4,16 @@
 {% block subtitle%} ユーザー情報 {% endblock %}
 {% block body %} 
 <div class="user_form">
+  <h3>教員向け新規情報登録ページ</h3>
+  <br>
+  教員または生徒の情報を新たに追加することができます<br><br>
+  教員の情報を登録する際は管理ページより<br>スーパーユーザーに
+  チェックマークを<br>付けてください。
+
+  <br>
 <form class="my-form" action="" method="POST">
 <div class="form-group">
+  <br>
   <label for="id_username">ユーザーネーム</label>
   {{ form.username }}
   {{ form.username.errors}}
@@ -42,11 +50,6 @@
   {{ form.last_name }}
   {{ form.last_name.errors}}
   <p class="help-block">{{ form.last_name.help_text }}</p>
-</div>
-<div class="form-group">
-  <label for="last_name">教員の場合選択してください。</label>
-  {{ admin.is_superuser }}
-  <p class="help-block"></p>
 </div>
 <div class="form-group">
   <input type="submit" class="btn btn-default" value="登録">

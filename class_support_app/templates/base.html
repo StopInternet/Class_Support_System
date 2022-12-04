@@ -46,7 +46,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{% url 'class_support_app:index'%}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>メインページ</span></a>
             </li>
@@ -75,7 +75,7 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>席替えシステム</span></a>
             </li>
-
+            {% if user.id %}
             <!-- Nav Item - ミニテスト-->
             <!--if else endifで改良必須-->
             <li class="nav-item">
@@ -118,7 +118,7 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
+            {% endif %}
         </ul>
         <!-- End of Sidebar -->
 
@@ -174,31 +174,23 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                {% if user.id %}
                                 <a class="dropdown-item" href="{% url 'class_support_app:profile'%}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    logout
-                                </a>
-                                <a class="dropdown-item" href="{% url 'account_signup'%}">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    register
-                                </a>
+                                {% endif %}
                                 <a class="dropdown-item" href="{% url 'account_login'%}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     login
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
+                                {% if user.id%}
                                 <a class="dropdown-item" href="{% url 'account_logout'%}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
+                                {% endif %}
                             </div>
                         </li>
 
@@ -233,7 +225,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{% url 'account_logout'%}">Logout</a>
                 </div>
             </div>
         </div>
