@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from .models import Poll
 
 class LoginForm(AuthenticationForm):
   def __init__(self,*args,**kwargs):
@@ -68,3 +69,12 @@ class UserChangeFrom(forms.ModelForm):
   
 class UserPasswordChangeForm(PasswordChangeForm):
   pass
+
+class CreatePollForm(ModelForm):
+  class Meta:
+    model = Poll
+    fields = [
+      'question',
+      'option_one',
+      'option_two',
+    ]

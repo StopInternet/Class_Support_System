@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} 投票結果 {% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">投票結果</h3><br>
+          </div>
+
+          <h4>投票議題:</h4>
+          <div class="panel-body">
+              <h3>{{ poll.question }}</h3>
+          </div>
+          <br>
+          <ul class="list-group">
+              <li class="list-group-item">{{ poll.option_one }} &mdash; <strong>{{ poll.option_one_count }}</strong></li>
+              <li class="list-group-item">{{ poll.option_two }} &mdash; <strong>{{ poll.option_two_count }}</strong></li>
+          </ul>
+
+          <div class="panel-footer">
+              Total &mdash; <strong>{{ poll.total }}</strong>
+          </div><br>
+          <a href="{% url 'class_support_app:poll_home'%}">一覧に戻る</a>
+      </div>
+  </div>
+</div>
+{% endblock %}

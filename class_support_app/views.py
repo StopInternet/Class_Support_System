@@ -8,11 +8,12 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.views import LoginView, LogoutView
+from accounts.models import CustomUser
+from django.contrib import messages
+from .forms import CreatePollForm
+from .models import Poll
+from django.http import HttpResponse
 
-def logoutfunc(request):
-    template_name = "index.html"
-    logout(request)
-    
 def logoutfunc(request):
     template_name = "index.html"
     logout(request,template_name)
@@ -71,6 +72,7 @@ def register(request):
     context = {
         "form": form,
     }
+    messages.success(request,'登録が完了したと思う？')
     return render(request,'profile_register.html',context)
 
 #ログイン情報の変更
@@ -96,3 +98,69 @@ def change_password(request):
         "form":form,
     }
     return render(request,'profile_password.html',context)
+
+class OnlyYouMixin(UserPassesTestMixin):
+    raise_exception = True
+    def lock_func(self):
+        user = self.request.user
+        return user.username == self.kwargs['username'] and user.is_superuser
+class UserDeleteView(LoginRequiredMixin,generic.DeleteView):
+    model = CustomUser
+    template_name = "profile_delete.html"
+    def delete(self,request,*args,**kwargs):
+        return super().delete(request,*args,**kwargs)
+
+def UserList(request):
+    model = CustomUser
+    context = {
+        "username":model.username
+    }
+    return render(request,'profile_list.html',context)
+
+def poll_home(request):
+    polls = Poll.objects.all()
+    context = {
+        'polls':polls
+    }
+    return render(request,'poll_home.html',context)
+
+def poll_create(request):
+    if request.method == 'POST':
+        form = CreatePollForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('class_support_app:poll_home')
+    else:
+        form = CreatePollForm()
+    context = {
+        'form':form
+    }
+    return render(request,'poll_create.html',context)
+
+def poll_vote(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+    if request.method == 'POST':
+        selected_option = request.POST['poll']
+        if selected_option == 'option1':
+            poll.option_one_count += 1
+        elif selected_option == 'option2':
+            poll.option_two_count += 1
+        else:
+            return HttpResponse(400, 'Invalid form')
+
+        poll.save()
+
+        return redirect('class_support_app:poll_results', poll.id)
+
+    context = {
+        'poll' : poll
+    }
+    return render(request, 'poll_vote.html', context)
+
+def poll_results(request,poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+    context = {
+        'poll':poll
+    }
+    return render(request,'poll_results.html',context)
+

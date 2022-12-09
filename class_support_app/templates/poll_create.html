@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} パスワードを変更 {% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">投票を作成</h3>
+              <p>投票する議題</p>
+          </div>
+              
+          <form method="POST">
+              {% csrf_token %}
+              <div class="panel-body">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <div class="form-group">
+                              <label for="question">エンターで改行</label>
+                              {{ form.question }}
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-lg-4">
+                          <div class="form-group">
+                              <label for="option1">選択肢１</label>
+                              {{ form.option_one }}
+                          </div>
+                      </div>
+                      <div class="col-lg-4">
+                          <div class="form-group">
+                              <label for="option2">選択肢２</label>
+                              {{ form.option_two }}
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <hr />
+                      <div class="col-lg-4">
+                          <button type="submit" class="btn btn-info">投票を作成</button>
+                      </div>
+                  </div>
+              </div>
+          </form>
+
+      </div>
+  </div>
+</div>
+{% endblock %}

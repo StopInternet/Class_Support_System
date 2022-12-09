@@ -5,15 +5,18 @@
 {% block body %} 
 
 <div class="user_form">
-  <h2>ログイン情報</h2>
+  <h2>登録情報</h2>
   <p>初回ログインの方は<br>
-    必ずパスワードを変更を行ってください。</p>
-<h4>名前</h4>
+    必ずパスワードを変更を行ってください。<br>
+    削除が必要な場合は管理者まで<br>
+    申請を行ってください。</p>
+<h4>お名前</h4>
 <input type="text" value="{{ user.first_name }} {{ user.last_name }}" style="width:300px" disabled><br><br>
+<h4>ユーザーID</h4>
+<input type="text" value="{{ user.username }}" style="width:300px" disabled>
+<br><br>
 <h4>メールアドレス</h4>
-
 <input type="text" value="{{ user.email }}" style="width:300px" disabled>
-{{ form.password }}
 <br><br>
 
 {% if user.is_superuser %}
@@ -26,4 +29,7 @@
 <a href="{% url 'class_support_app:profile_change'%}">ユーザー情報を変更</a>
 </div>
 
+{% for datas in object %}
+{{ datas.id }}
+{% endfor %}
 {% endblock %}

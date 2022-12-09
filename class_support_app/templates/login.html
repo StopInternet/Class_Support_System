@@ -4,7 +4,8 @@
 {% block subtitle%} ユーザー情報を変更 {% endblock %}
 {% block body %} 
 
-<form class="user_form" action="" method="POST">
+<div class="user_form">
+<form action="" method="POST">
   <h3>ユーザー情報を変更</h3><br>
   <p>ユーザーIDは半角アルファベットまたは<br>
     半角数字で入力を行ってください。</p>
@@ -28,4 +29,5 @@
   </div>
   {% csrf_token %}
 </form>
+</div>
   {% endblock %}

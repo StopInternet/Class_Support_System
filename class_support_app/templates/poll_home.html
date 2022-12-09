@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 授業支援サイト{% endblock %}
+{% block subtitle%} 投票データ確認 {% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            {% if user.is_superuser %}
+            <h3 class="panel-title">投票データ一覧</h3>
+            {% else %}
+            <h3 class="panel-title">投票データを検索</h3>
+              {% endif %}
+
+            {% if user.id %}
+          <!--生徒の場合-->
+          <br>検索:<br>
+          <input type="text" id="search-text" placeholder="投票IDを入力",value=""><br>
+          <input type="button" id="names_seach" value="検索" onclick="search()">
+          <input type="button" id="reset" value="リセット" onclick="Resets()"><br><br>
+          <!--表示階層-->
+          <ul class="list-group">
+            {% for poll in polls %}
+            <div id="Tois_{{ forloop.counter }}">
+            <li class="list-group-item"  id="Toi_{{ poll.id }}" style="display:none">
+              <span class="pull-right">投票ID {{ poll.id }} :
+                <strong>{{ poll.question }}</strong>
+                    <a href="{% url 'class_support_app:poll_vote' poll.id %}" class="btn btn-info btn-xs">Vote</a> &nbsp;
+                    <a href="{% url 'class_support_app:poll_results' poll.id %}" class="btn btn-default btn-xs">View Results</a> &nbsp;
+                </span>
+            </li>
+          </div>
+          <input type="text" class="Total" value="{{forloop.counter}}" style="display:none">
+            {% endfor %}
+        </ul>
+          {% endif %}
+          </div>
+          <br><br>
+          <!--教員の場合の表示-->
+          {% if user.is_superuser%}
+          投票一覧<br>
+          <ul class="list-group">
+              {% for poll in polls %}
+              <li class="list-group-item">
+                <span class="pull-right">投票ID {{ poll.id }} :
+                  <strong>{{ poll.question }}</strong>
+                      <a href="{% url 'class_support_app:poll_vote' poll.id %}" class="btn btn-info btn-xs" style="margin:right">投票する</a> &nbsp;
+                      <a href="{% url 'class_support_app:poll_results' poll.id %}" class="btn btn-default btn-xs" style="text-align:right">投票結果</a> &nbsp;
+                  </span>
+              </li>
+              {% endfor %}
+          </ul>
+          {% endif %}
+          
+      </div>
+  </div>
+</div>
+<script src="{% static 'js/touhyou.js'%}">
+{% endblock %}

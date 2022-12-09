@@ -16,5 +16,9 @@ urlpatterns = [
     path('logout', views.logoutfunc, name='logout'),
     path('profile_change',views.change_data,name="profile_change"),
     path('profile_password',views.change_password,name="profile_password"),
-    path('profile_register',views.register,name="profile_register")
+    path('profile_register',views.register,name="profile_register"),
+    path('poll_home',views.poll_home,name="poll_home"),
+    path('poll_create',views.poll_create,name="poll_create"),
+    path('poll_vote/<poll_id>/',views.poll_vote,name="poll_vote"),
+    path('poll_results/<poll_id>/',views.poll_results,name="poll_results")
 ]
